@@ -1,1 +1,24 @@
-<p>chart1 works!</p>
+<svg (resize)="onResize()">
+
+  <line class="x-axis"
+        [attr.x1]="0.3 * padding + paddingOuter"
+        [attr.y1]="innerHeight + margin.top + 2"
+        [attr.x2]="innerWidth - (0.3 * padding + paddingOuter)"
+        [attr.y2]="innerHeight + margin.top + 2">
+  </line>
+
+  @for (rect of chart; track rect; let idx = $index) {
+    <rect [attr.x]="idx * rectWidth + 0.5 * padding + paddingOuter"
+          [attr.y]="margin.top + innerHeight - heightFactor * rect"
+          [attr.width]="bandwidth"
+          [attr.height]="heightFactor * rect"/>
+  }
+
+  @for (label of xLabels; track label; let idx = $index) {
+    <text class="x-labels"
+      [attr.x]="idx * rectWidth + 0.5 * padding + paddingOuter + 0.5 * bandwidth"
+      [attr.y]="dimensions.height - 2">
+      {{ label }}
+    </text>
+  }
+</svg>
